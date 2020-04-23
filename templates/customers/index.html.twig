@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Clients{% endblock %}
+
+{% block body %}
+    <h1 class="h3 mb-2 text-gray-800">Gestion des clients</h1>
+          <p class="mb-4">Lorem ipsum.Lorem ipsum.Lorem ipsum.Lorem ipsum.Lorem ipsum.</p>
+
+    <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <h6 class="m-0 font-weight-bold text-primary">Clients</h6>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                  <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Société</th>
+                <th>Intéragir</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for customer in customers %}
+            <tr>
+                <td>{{ customer.id }}</td>
+                <td>{{ customer.name }}</td>
+                <td>{{ customer.company }}</td>
+                <td>
+                    <a href="{{ path('customers_show', {'id': customer.id}) }}">Voir</a>
+                    <a href="{{ path('customers_edit', {'id': customer.id}) }}">Modifier</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('customers_new') }}">Create new</a>
+{% endblock %}

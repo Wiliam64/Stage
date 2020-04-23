@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Conditions index{% endblock %}
+
+{% block body %}
+    <h1>Conditions index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Key_condition</th>
+                <th>Value</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for condition in conditions %}
+            <tr>
+                <td>{{ condition.id }}</td>
+                <td>{{ condition.keyCondition }}</td>
+                <td>{{ condition.value }}</td>
+                <td>
+                    <a href="{{ path('conditions_show', {'id': condition.id}) }}">show</a>
+                    <a href="{{ path('conditions_edit', {'id': condition.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('conditions_new') }}">Create new</a>
+{% endblock %}
