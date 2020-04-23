@@ -5,11 +5,11 @@
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
       <!-- Sidebar - Brand -->
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/">
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ path('main') }}">
         <div class="sidebar-brand-icon rotate-n-15">
-          <i class="fas fa-vr-cardboard"></i>
+          <i class="fas fa-laugh-wink"></i>
         </div>
-        <div class="sidebar-brand-text mx-3">Editeur de projet <sup>VR</sup></div>
+        <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
       </a>
 
       <!-- Divider -->
@@ -17,7 +17,7 @@
 
       <!-- Nav Item - Dashboard -->
       <li class="nav-item active">
-        <a class="nav-link" href="/">
+        <a class="nav-link" href="{{ path('main') }}">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Dashboard</span></a>
       </li>
@@ -32,28 +32,28 @@
 
       <!-- Nav Item - projets -->
       <li class="nav-item">
-        <a class="nav-link" href="/projects">
+        <a class="nav-link" href="{{ path('projects_index') }}">
           <i class="fas fa-fw fa-chart-area"></i>
           <span>Projets</span></a>
       </li>
 
       <!-- Nav Item - Tables -->
       <li class="nav-item">
-        <a class="nav-link" href="/users">
+        <a class="nav-link" href="{{ path('users_index') }}">
           <i class="fas fa-fw fa-table"></i>
           <span>Utilisateurs</span></a>
       </li>
 
       <!-- Nav Item - Clients -->
       <li class="nav-item">
-        <a class="nav-link" href="/customers">
+        <a class="nav-link" href="{{ path('customers_index') }}">
           <i class="fas fa-fw fa-table"></i>
           <span>Clients</span></a>
       </li>
 
       <!-- Nav Item - Equipement -->
       <li class="nav-item">
-        <a class="nav-link" href="/equipments">
+        <a class="nav-link" href="{{ path('equipments_index') }}">
           <i class="fas fa-fw fa-table"></i>
           <span>Equipement</span></a>
       </li>
@@ -118,7 +118,7 @@
               <!-- Dropdown - User Information -->
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="{% if app.user %} {{ path('app_logout') }} {% endif %}">
+                <a class="dropdown-item" href="{{ path('app_logout') }}" data-toggle="modal">
                   <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                   Logout
                 </a>

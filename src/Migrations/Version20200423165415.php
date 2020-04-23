@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20200420124643 extends AbstractMigration
+final class Version20200423165415 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -22,9 +22,7 @@ final class Version20200420124643 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE equipments ADD project_id INT DEFAULT NULL');
-        $this->addSql('ALTER TABLE equipments ADD CONSTRAINT FK_6F6C2544166D1F9C FOREIGN KEY (project_id) REFERENCES projects (id)');
-        $this->addSql('CREATE INDEX IDX_6F6C2544166D1F9C ON equipments (project_id)');
+        $this->addSql('CREATE TABLE users (id INT AUTO_INCREMENT NOT NULL, email VARCHAR(180) NOT NULL, roles JSON NOT NULL, password VARCHAR(255) NOT NULL, name VARCHAR(50) NOT NULL, first_name VARCHAR(50) NOT NULL, company VARCHAR(50) NOT NULL, UNIQUE INDEX UNIQ_1483A5E9E7927C74 (email), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
     }
 
     public function down(Schema $schema) : void
@@ -32,8 +30,6 @@ final class Version20200420124643 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE equipments DROP FOREIGN KEY FK_6F6C2544166D1F9C');
-        $this->addSql('DROP INDEX IDX_6F6C2544166D1F9C ON equipments');
-        $this->addSql('ALTER TABLE equipments DROP project_id');
+        $this->addSql('DROP TABLE users');
     }
 }

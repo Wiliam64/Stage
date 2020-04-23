@@ -2,15 +2,11 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UsersRepository")
- * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
  */
 class Users implements UserInterface
 {
@@ -56,11 +52,6 @@ class Users implements UserInterface
      * @ORM\ManyToMany(targetEntity="App\Entity\Projects", mappedBy="users")
      */
     private $projects;
-
-    public function __construct()
-    {
-        $this->projects = new ArrayCollection();
-    }
 
 
     public function getId(): ?int
@@ -170,14 +161,14 @@ class Users implements UserInterface
         return $this->company;
     }
 
-    public function setCompany(?string $company): self
+    public function setCompany(string $company): self
     {
         $this->company = $company;
 
         return $this;
     }
 
-    /**
+     /**
      * @return Collection|Projects[]
      */
     public function getProjects(): Collection
