@@ -1,17 +1,24 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Actions index{% endblock %}
+{% block title %}Actions{% endblock %}
 
 {% block body %}
-    <h1>Actions index</h1>
+    <h1 class="h3 mb-2 text-gray-800">Gestion des clients</h1>
+          <p class="mb-4">Lorem ipsum.Lorem ipsum.Lorem ipsum.Lorem ipsum.Lorem ipsum.</p>
 
-    <table class="table">
-        <thead>
+    <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <h6 class="m-0 font-weight-bold text-primary">Actions</h6>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                  <thead>
             <tr>
                 <th>Id</th>
-                <th>Key_action</th>
-                <th>Value</th>
-                <th>actions</th>
+                <th>Clé action</th>
+                <th>Valeur</th>
+                <th>Intéragir</th>
             </tr>
         </thead>
         <tbody>
@@ -21,17 +28,17 @@
                 <td>{{ action.keyAction }}</td>
                 <td>{{ action.value }}</td>
                 <td>
-                    <a href="{{ path('actions_show', {'id': action.id}) }}">show</a>
-                    <a href="{{ path('actions_edit', {'id': action.id}) }}">edit</a>
+                    <a href="{{ path('actions_show', {'id': action.id}) }}">Voir</a>
+                    <a href="{{ path('actions_edit', {'id': action.id}) }}">Modifier</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="4">no records found</td>
+                <td colspan="4">Aucune entrée trouver</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('actions_new') }}">Create new</a>
+    <a href="{{ path('actions_new') }}">Créer une nouvelle entrée</a>
 {% endblock %}

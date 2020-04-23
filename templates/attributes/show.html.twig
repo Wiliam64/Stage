@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Attributes{% endblock %}
+{% block title %}Attributs{% endblock %}
 
 {% block body %}
-    <h1>Attributes</h1>
+    <h1>Attributs</h1>
 
     <table class="table">
         <tbody>
@@ -12,19 +12,19 @@
                 <td>{{ attribute.id }}</td>
             </tr>
             <tr>
-                <th>Key_attribute</th>
+                <th>Clé attribut</th>
                 <td>{{ attribute.keyAttribute }}</td>
             </tr>
             <tr>
-                <th>Value</th>
+                <th>Valeur</th>
                 <td>{{ attribute.value }}</td>
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('attributes_index') }}">back to list</a>
+    <a href="{{ path('attributes_index') }}">Retour à la liste</a> <br>
 
-    <a href="{{ path('attributes_edit', {'id': attribute.id}) }}">edit</a>
+    <a href="{{ path('attributes_edit', {'id': attribute.id}) }}">Modifier</a>
 
     {{ include('attributes/_delete_form.html.twig') }}
 {% endblock %}

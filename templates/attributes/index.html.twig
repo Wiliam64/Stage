@@ -1,17 +1,24 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Attributes index{% endblock %}
+{% block title %}Attributs{% endblock %}
 
 {% block body %}
-    <h1>Attributes index</h1>
+    <h1 class="h3 mb-2 text-gray-800">Attributs</h1>
+          <p class="mb-4">Lorem ipsum.Lorem ipsum.Lorem ipsum.Lorem ipsum.Lorem ipsum.</p>
 
-    <table class="table">
-        <thead>
+    <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <h6 class="m-0 font-weight-bold text-primary">Attributs</h6>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                  <thead>
             <tr>
                 <th>Id</th>
-                <th>Key_attribute</th>
-                <th>Value</th>
-                <th>actions</th>
+                <th>Clé attribut</th>
+                <th>Valeur</th>
+                <th>Intéragir</th>
             </tr>
         </thead>
         <tbody>
@@ -21,17 +28,17 @@
                 <td>{{ attribute.keyAttribute }}</td>
                 <td>{{ attribute.value }}</td>
                 <td>
-                    <a href="{{ path('attributes_show', {'id': attribute.id}) }}">show</a>
-                    <a href="{{ path('attributes_edit', {'id': attribute.id}) }}">edit</a>
+                    <a href="{{ path('attributes_show', {'id': attribute.id}) }}">Voir</a>
+                    <a href="{{ path('attributes_edit', {'id': attribute.id}) }}">Modifier</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="4">no records found</td>
+                <td colspan="4">Aucune entrée trouver</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('attributes_new') }}">Create new</a>
+    <a href="{{ path('attributes_new') }}">Créer une nouvelle entrée</a>
 {% endblock %}

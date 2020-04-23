@@ -3,7 +3,7 @@
 {% block title %}Clients{% endblock %}
 
 {% block body %}
-    <h1 class="h3 mb-2 text-gray-800">Gestion des clients</h1>
+    <h1 class="h3 mb-2 text-gray-800">Clients</h1>
           <p class="mb-4">Lorem ipsum.Lorem ipsum.Lorem ipsum.Lorem ipsum.Lorem ipsum.</p>
 
     <div class="card shadow mb-4">
@@ -34,11 +34,11 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="4">no records found</td>
+                <td colspan="4">Aucune entrée trouver</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('customers_new') }}">Create new</a>
+    <a href="{{ path('customers_new') }}">Créer une nouvelle entrée</a>
 {% endblock %}

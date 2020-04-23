@@ -1,17 +1,22 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Conditions index{% endblock %}
+{% block title %}Conditions{% endblock %}
 
 {% block body %}
-    <h1>Conditions index</h1>
 
-    <table class="table">
-        <thead>
+    <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <h6 class="m-0 font-weight-bold text-primary">Conditions</h6>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                  <thead>
             <tr>
                 <th>Id</th>
-                <th>Key_condition</th>
-                <th>Value</th>
-                <th>actions</th>
+                <th>Clé condition</th>
+                <th>Valeur</th>
+                <th>Intéragir</th>
             </tr>
         </thead>
         <tbody>
@@ -21,17 +26,17 @@
                 <td>{{ condition.keyCondition }}</td>
                 <td>{{ condition.value }}</td>
                 <td>
-                    <a href="{{ path('conditions_show', {'id': condition.id}) }}">show</a>
-                    <a href="{{ path('conditions_edit', {'id': condition.id}) }}">edit</a>
+                    <a href="{{ path('conditions_show', {'id': condition.id}) }}">Voir</a>
+                    <a href="{{ path('conditions_edit', {'id': condition.id}) }}">Modifier</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="4">no records found</td>
+                <td colspan="4">Aucune entrée trouver</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('conditions_new') }}">Create new</a>
+    <a href="{{ path('conditions_new') }}">Créer une nouvelle entrée</a>
 {% endblock %}
