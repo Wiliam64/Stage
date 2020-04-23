@@ -1,21 +1,27 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Users index{% endblock %}
+{% block title %}Users{% endblock %}
 
 {% block body %}
-    <h1>Users index</h1>
+    <h1 class="h3 mb-2 text-gray-800">Users</h1>
+          <p class="mb-4">Lorem ipsum.Lorem ipsum.Lorem ipsum.Lorem ipsum.Lorem ipsum.</p>
 
-    <table class="table">
-        <thead>
+    <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <h6 class="m-0 font-weight-bold text-primary">Users</h6>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                  <thead>
             <tr>
                 <th>Id</th>
                 <th>Email</th>
                 <th>Roles</th>
-                <th>Password</th>
-                <th>Name</th>
-                <th>First_name</th>
-                <th>Company</th>
-                <th>actions</th>
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>Société</th>
+                <th>Intéragir</th>
             </tr>
         </thead>
         <tbody>
@@ -24,22 +30,21 @@
                 <td>{{ user.id }}</td>
                 <td>{{ user.email }}</td>
                 <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
-                <td>{{ user.password }}</td>
                 <td>{{ user.name }}</td>
                 <td>{{ user.firstName }}</td>
                 <td>{{ user.company }}</td>
                 <td>
-                    <a href="{{ path('users_show', {'id': user.id}) }}">show</a>
-                    <a href="{{ path('users_edit', {'id': user.id}) }}">edit</a>
+                    <a href="{{ path('users_show', {'id': user.id}) }}">Voir</a>
+                    <a href="{{ path('users_edit', {'id': user.id}) }}">Modifier</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="8">no records found</td>
+                <td colspan="8">Aucune entrée trouver</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('users_new') }}">Create new</a>
+    <a href="{{ path('users_new') }}">Créer une nouvelle entrée</a>
 {% endblock %}
