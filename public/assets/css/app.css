@@ -1,4 +1,15 @@
-#users label {
-    width:100px;
-    
+#users label{
+    width: 100px;
+}
+
+#customers label{
+    width: 100px;
+}
+
+#projects label{
+    width: 100px;
+}
+
+#equipments label{
+    width: 100px;
 }
