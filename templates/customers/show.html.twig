@@ -27,6 +27,13 @@
                 <th>Société</th>
                 <td>{{ customer.company }}</td>
             </tr>
+            <tr>
+                <th>Projets : {{ customer.projects|length}}</th>
+                <td>
+                {% for projet in customer.projects %}
+                    {{projet.name}} <br>
+                {% endfor %}</td>
+            </tr>
         </tbody>
     </table>
 

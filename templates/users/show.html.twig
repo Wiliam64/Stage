@@ -39,6 +39,14 @@
                 <th>Company</th>
                 <td>{{ user.company }}</td>
             </tr>
+            <tr>
+                <th>Customers</th>
+                <td>
+                    {% for customer in user.customers %}
+                        {{customer.company}}
+                    {% endfor %}
+            </td>
+            </tr>
         </tbody>
     </table>
 

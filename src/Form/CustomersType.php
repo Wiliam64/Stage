@@ -14,6 +14,7 @@ class CustomersType extends AbstractType
         $builder
             ->add('name')
             ->add('company')
+            ->add('projects')
         ;
     }
 
