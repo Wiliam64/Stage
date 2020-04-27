@@ -29,11 +29,6 @@ class Projects
     private $description;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Users", inversedBy="projects")
-     */
-    private $users;
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Customers", inversedBy="projects")
      */
     private $customers;
@@ -42,6 +37,11 @@ class Projects
      * @ORM\OneToMany(targetEntity="App\Entity\Equipments", mappedBy="project")
      */
     private $equipments;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\UsersProjects", mappedBy="projects")
+     */
+    private $users;
 
     public function __construct()
     {
@@ -74,32 +74,6 @@ class Projects
     public function setDescription(string $description): self
     {
         $this->description = $description;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Users[]
-     */
-    public function getUsers(): Collection
-    {
-        return $this->users;
-    }
-
-    public function addUser(Users $user): self
-    {
-        if (!$this->users->contains($user)) {
-            $this->users[] = $user;
-        }
-
-        return $this;
-    }
-
-    public function removeUser(Users $user): self
-    {
-        if ($this->users->contains($user)) {
-            $this->users->removeElement($user);
-        }
 
         return $this;
     }
@@ -141,6 +115,42 @@ class Projects
             // set the owning side to null (unless already changed)
             if ($equipment->getProject() === $this) {
                 $equipment->setProject(null);
+            }
+        }
+
+        return $this;
+    }
+    
+    public function __toString(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @return Collection|UsersProjects[]
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(UsersProjects $user): self
+    {
+        if (!$this->users->contains($user)) {
+            $this->users[] = $user;
+            $user->setProjects($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(UsersProjects $user): self
+    {
+        if ($this->users->contains($user)) {
+            $this->users->removeElement($user);
+            // set the owning side to null (unless already changed)
+            if ($user->getProjects() === $this) {
+                $user->setProjects(null);
             }
         }
 

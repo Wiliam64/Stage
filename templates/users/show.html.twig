@@ -15,6 +15,7 @@
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 
         <tbody>
+            <tr>
                 <th>Id</th>
                 <td>{{ user.id }}</td>
             </tr>
@@ -27,15 +28,15 @@
                 <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
             </tr>
             <tr>
-                <th>Nom</th>
+                <th>Name</th>
                 <td>{{ user.name }}</td>
             </tr>
             <tr>
-                <th>Prenom</th>
+                <th>First_name</th>
                 <td>{{ user.firstName }}</td>
             </tr>
             <tr>
-                <th>Société</th>
+                <th>Company</th>
                 <td>{{ user.company }}</td>
             </tr>
         </tbody>

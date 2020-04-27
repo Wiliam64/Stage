@@ -2,7 +2,9 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -49,10 +51,15 @@ class Users implements UserInterface
     private $company;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Projects", mappedBy="users")
+     * @ORM\ManyToOne(targetEntity="App\Entity\UsersProjects", inversedBy="users")
      */
     private $projects;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Customers", inversedBy="users")
+     */
+    private $customers;
+   
 
     public function getId(): ?int
     {
@@ -168,30 +175,43 @@ class Users implements UserInterface
         return $this;
     }
 
-     /**
-     * @return Collection|Projects[]
-     */
-    public function getProjects(): Collection
+    public function __toString(): string
+    {
+        return $this->email;
+    }
+
+    public function getRole(): string
+    {
+        $roles = $this->getRoles();
+        return  $roles[0];
+    }
+
+    public function setRole(string $role): self
+    {
+        $this->roles = [$role];
+        return $this;
+    }
+
+    public function getProjects(): ?UsersProjects
     {
         return $this->projects;
     }
 
-    public function addProject(Projects $project): self
+    public function setProjects(?UsersProjects $projects): self
     {
-        if (!$this->projects->contains($project)) {
-            $this->projects[] = $project;
-            $project->addUser($this);
-        }
+        $this->projects = $projects;
 
         return $this;
     }
 
-    public function removeProject(Projects $project): self
+    public function getCustomers(): ?Customers
     {
-        if ($this->projects->contains($project)) {
-            $this->projects->removeElement($project);
-            $project->removeUser($this);
-        }
+        return $this->customers;
+    }
+
+    public function setCustomers(?Customers $customers): self
+    {
+        $this->customers = $customers;
 
         return $this;
     }
