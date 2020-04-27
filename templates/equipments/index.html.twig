@@ -27,6 +27,7 @@
                 <td>{{ equipment.id }}</td>
                 <td>{{ equipment.name }}</td>
                 <td>{{ equipment.init }}</td>
+                <td>{{equipment.state}}</td>
                 <td>
                     <a href="{{ path('equipments_show', {'id': equipment.id}) }}">Voir</a>
                     <a href="{{ path('equipments_edit', {'id': equipment.id}) }}">Modifier</a>

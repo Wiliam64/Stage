@@ -18,7 +18,7 @@
                 <th>Id</th>
                 <th>Name</th>
                 <th>Description</th>
-                <th>Customers</th>
+                {# <th>Customers</th> #}
                 <th>actions</th>
             </tr>
         </thead>
@@ -28,7 +28,7 @@
                 <td>{{ project.id }}</td>
                 <td>{{ project.name }}</td>
                 <td>{{ project.description }}</td>
-                <td>{{project.users|length}}</td>
+                {# <td>{{project.users|length}}</td> #}
                 <td>
                     <a href="{{ path('projects_show', {'id': project.id}) }}">Voir</a>
                     <a href="{{ path('projects_edit', {'id': project.id}) }}">Modifier</a>

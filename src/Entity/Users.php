@@ -46,16 +46,6 @@ class Users implements UserInterface
     private $first_name;
 
     /**
-     * @ORM\Column(type="string", length=50, nullable=true)
-     */
-    private $company;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\UsersProjects", inversedBy="users")
-     */
-    private $projects;
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Customers", inversedBy="users")
      */
     private $customers;
@@ -189,18 +179,6 @@ class Users implements UserInterface
     public function setRole(string $role): self
     {
         $this->roles = [$role];
-        return $this;
-    }
-
-    public function getProjects(): ?UsersProjects
-    {
-        return $this->projects;
-    }
-
-    public function setProjects(?UsersProjects $projects): self
-    {
-        $this->projects = $projects;
-
         return $this;
     }
 

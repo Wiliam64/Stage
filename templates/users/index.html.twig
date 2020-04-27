@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Users{% endblock %}
+{% block title %}Users index{% endblock %}
 
 {% block body %}
-    <h1 class="h3 mb-2 text-gray-800">Users</h1>
+<h1 class="h3 mb-2 text-gray-800">Users</h1>
           <p class="mb-4">Lorem ipsum.Lorem ipsum.Lorem ipsum.Lorem ipsum.Lorem ipsum.</p>
 
     <div class="card shadow mb-4">
@@ -13,14 +13,14 @@
             <div class="card-body">
               <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                  <thead>
+
+        <tbody>
             <tr>
                 <th>Id</th>
                 <th>Email</th>
                 <th>Roles</th>
                 <th>Name</th>
                 <th>First_name</th>
-                <th>Company</th>
                 <th>Customers</th>
                 <th>actions</th>
             </tr>
@@ -33,20 +33,19 @@
                 <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
                 <td>{{ user.name }}</td>
                 <td>{{ user.firstName }}</td>
-                <td>{{user.customers}}</td>
-                <td>{{ user.company|length }}</td>
+                <th>{{user.customers}}</th>
                 <td>
-                    <a href="{{ path('users_show', {'id': user.id}) }}">Voir</a>
-                    <a href="{{ path('users_edit', {'id': user.id}) }}">Modifier</a>
+                    <a href="{{ path('users_show', {'id': user.id}) }}">show</a>
+                    <a href="{{ path('users_edit', {'id': user.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="8">Aucune entrée trouver</td>
+                <td colspan="7">no records found</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('users_new') }}">Créer une nouvelle entrée</a>
+    <a href="{{ path('users_new') }}">Create new</a>
 {% endblock %}

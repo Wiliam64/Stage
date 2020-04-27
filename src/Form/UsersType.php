@@ -23,8 +23,6 @@ class UsersType extends AbstractType
             ->add('password')
             ->add('name')
             ->add('first_name')
-            ->add('company')
-            ->add('projects')
             ->add('customers')
         ;
     }

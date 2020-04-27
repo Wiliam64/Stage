@@ -38,11 +38,6 @@ class Projects
      */
     private $equipments;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\UsersProjects", mappedBy="projects")
-     */
-    private $users;
-
     public function __construct()
     {
         $this->users = new ArrayCollection();
@@ -124,36 +119,5 @@ class Projects
     public function __toString(): string
     {
         return $this->name;
-    }
-
-    /**
-     * @return Collection|UsersProjects[]
-     */
-    public function getUsers(): Collection
-    {
-        return $this->users;
-    }
-
-    public function addUser(UsersProjects $user): self
-    {
-        if (!$this->users->contains($user)) {
-            $this->users[] = $user;
-            $user->setProjects($this);
-        }
-
-        return $this;
-    }
-
-    public function removeUser(UsersProjects $user): self
-    {
-        if ($this->users->contains($user)) {
-            $this->users->removeElement($user);
-            // set the owning side to null (unless already changed)
-            if ($user->getProjects() === $this) {
-                $user->setProjects(null);
-            }
-        }
-
-        return $this;
     }
 }
