@@ -29,7 +29,7 @@ class TypeEquipments
     private $description;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\States", mappedBy="typeEquipments", orphanRemoval=true)
+     * @ORM\ManyToOne(targetEntity="App\Entity\States", inversedBy="typeEquipments")
      */
     private $states;
 
@@ -66,40 +66,20 @@ class TypeEquipments
 
         return $this;
     }
+    public function __toString(): string
+    {
+        return $this->title;
+    }
 
-    /**
-     * @return Collection|States[]
-     */
-    public function getStates(): Collection
+    public function getStates(): ?States
     {
         return $this->states;
     }
 
-    public function addState(States $state): self
+    public function setStates(?States $states): self
     {
-        if (!$this->states->contains($state)) {
-            $this->states[] = $state;
-            $state->setTypeEquipments($this);
-        }
+        $this->states = $states;
 
         return $this;
-    }
-
-    public function removeState(States $state): self
-    {
-        if ($this->states->contains($state)) {
-            $this->states->removeElement($state);
-            // set the owning side to null (unless already changed)
-            if ($state->getTypeEquipments() === $this) {
-                $state->setTypeEquipments(null);
-            }
-        }
-
-        return $this;
-    }
-
-    public function __toString(): string
-    {
-        return $this->title;
     }
 }

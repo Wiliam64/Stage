@@ -34,12 +34,6 @@ class States
     private $object;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\TypeEquipments", inversedBy="states")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $typeEquipments;
-
-    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Actions", mappedBy="states")
      */
     private $actions;
@@ -54,11 +48,17 @@ class States
      */
     private $conditions;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\TypeEquipments", mappedBy="states")
+     */
+    private $typeEquipments;
+
     public function __construct()
     {
         $this->actions = new ArrayCollection();
         $this->attributes = new ArrayCollection();
         $this->conditions = new ArrayCollection();
+        $this->typeEquipments = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -98,18 +98,6 @@ class States
     public function setObject(?Equipments $object): self
     {
         $this->object = $object;
-
-        return $this;
-    }
-
-    public function getTypeEquipments(): ?TypeEquipments
-    {
-        return $this->typeEquipments;
-    }
-
-    public function setTypeEquipments(?TypeEquipments $typeEquipments): self
-    {
-        $this->typeEquipments = $typeEquipments;
 
         return $this;
     }
@@ -210,5 +198,36 @@ class States
     public function __toString(): string
     {
         return $this->name;
+    }
+
+    /**
+     * @return Collection|TypeEquipments[]
+     */
+    public function getTypeEquipments(): Collection
+    {
+        return $this->typeEquipments;
+    }
+
+    public function addTypeEquipment(TypeEquipments $typeEquipment): self
+    {
+        if (!$this->typeEquipments->contains($typeEquipment)) {
+            $this->typeEquipments[] = $typeEquipment;
+            $typeEquipment->setStates($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTypeEquipment(TypeEquipments $typeEquipment): self
+    {
+        if ($this->typeEquipments->contains($typeEquipment)) {
+            $this->typeEquipments->removeElement($typeEquipment);
+            // set the owning side to null (unless already changed)
+            if ($typeEquipment->getStates() === $this) {
+                $typeEquipment->setStates(null);
+            }
+        }
+
+        return $this;
     }
 }

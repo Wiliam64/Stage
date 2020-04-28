@@ -16,25 +16,17 @@ class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager)
     {
-        // Fixtures type d'équipements
-        $TypeEquipment = new TypeEquipments();
-        $TypeEquipment->setTitle("1 type");
-        $TypeEquipment->setDescription("Lorem Ipsum");
-        $manager->persist($TypeEquipment);
-        $manager->flush();
-
         // Fixtures Clients
         $Customers = new Customers();
         $Customers->setName("Client 1");
         $Customers->setCompany("Simplon");
         $manager->persist($Customers);
         $manager->flush();
-
+        
         //Fixtures Projets
         $Projects = new Projects();
         $Projects->setName("Alpha");
         $Projects->setDescription("Lorem Ipsum");
-        $Projects->getUsers(1);
         $Projects->getCustomers(1);
         $Projects->getEquipments(1);
         $manager->persist($Projects);
@@ -53,18 +45,24 @@ class AppFixtures extends Fixture
         $Conditions->setValue("si...alors");
         $manager->persist($Conditions);
         $manager->flush();
-
+        
         //Fixtures Attributes
         $Attributes = new Attributes();
         $Attributes->setKeyAttribute("couleur");
         $Attributes->setValue("bleue");
         $manager->persist($Attributes);
         $manager->flush();
-
+        
+        // Fixtures type d'équipements
+        $TypeEquipment = new TypeEquipments();
+        $TypeEquipment->setTitle("1 type");
+        $TypeEquipment->setDescription("Lorem Ipsum");
+        $TypeEquipment->setStates(null);
+        $manager->persist($TypeEquipment);
+        $manager->flush();
+        
         //Fixtures States
         $States = new States();
-        $States->getTypeEquipments();
-        $States->setTypeEquipments($TypeEquipment);
         $States->setName("State 1");
         $States->setDescription("Description du state 1 ");
         $States->getActions(1);
