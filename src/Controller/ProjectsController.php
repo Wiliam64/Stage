@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Entity\Projects;
 use App\Form\ProjectsType;
 use App\Repository\ProjectsRepository;
+use App\Repository\EquipmentsRepository;
+use App\Repository\StatesRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -51,10 +53,12 @@ class ProjectsController extends AbstractController
     /**
      * @Route("/{id}", name="projects_show", methods={"GET"})
      */
-    public function show(Projects $project): Response
+    public function show(Projects $project, EquipmentsRepository $equipmentsRepository, StatesRepository $statesRepository): Response
     {
         return $this->render('projects/show.html.twig', [
             'project' => $project,
+            'equipments' => $equipmentsRepository->findByProject($project->getId()),
+            $states = $statesRepository->findByProject($project->getId()),
         ]);
     }
 

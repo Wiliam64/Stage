@@ -22,19 +22,17 @@ class StatesRepository extends ServiceEntityRepository
     // /**
     //  * @return States[] Returns an array of States objects
     //  */
-    /*
-    public function findByExampleField($value)
+    public function findByProject($projetid)
     {
         return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
+            ->leftJoin('s.object', 'e')
+            ->andWhere('e.project = :val')
+            ->setParameter('val', $projetid)
             ->orderBy('s.id', 'ASC')
-            ->setMaxResults(10)
             ->getQuery()
             ->getResult()
         ;
     }
-    */
 
     /*
     public function findOneBySomeField($value): ?States

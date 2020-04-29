@@ -29,7 +29,7 @@ class States
     private $description;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Equipments", mappedBy="objects")
+     * @ORM\OneToMany(targetEntity="App\Entity\Equipments", mappedBy="state")
      */
     private $object;
 
