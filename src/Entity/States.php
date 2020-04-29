@@ -29,11 +29,6 @@ class States
     private $description;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Equipments", mappedBy="state")
-     */
-    private $object;
-
-    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Actions", mappedBy="states")
      */
     private $actions;
@@ -49,16 +44,16 @@ class States
     private $conditions;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\TypeEquipments", mappedBy="states")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Equipments", inversedBy="states")
      */
-    private $typeEquipments;
+    private $Equipment;
+
 
     public function __construct()
     {
         $this->actions = new ArrayCollection();
         $this->attributes = new ArrayCollection();
-        $this->conditions = new ArrayCollection();
-        $this->typeEquipments = new ArrayCollection();
+        $this->conditions = new ArrayCollection();;
     }
 
     public function getId(): ?int
@@ -86,18 +81,6 @@ class States
     public function setDescription(string $description): self
     {
         $this->description = $description;
-
-        return $this;
-    }
-
-    public function getObject(): ?Equipments
-    {
-        return $this->object;
-    }
-
-    public function setObject(?Equipments $object): self
-    {
-        $this->object = $object;
 
         return $this;
     }
@@ -200,33 +183,14 @@ class States
         return $this->name;
     }
 
-    /**
-     * @return Collection|TypeEquipments[]
-     */
-    public function getTypeEquipments(): Collection
+    public function getEquipment(): ?Equipments
     {
-        return $this->typeEquipments;
+        return $this->Equipment;
     }
 
-    public function addTypeEquipment(TypeEquipments $typeEquipment): self
+    public function setEquipment(?Equipments $Equipment): self
     {
-        if (!$this->typeEquipments->contains($typeEquipment)) {
-            $this->typeEquipments[] = $typeEquipment;
-            $typeEquipment->setStates($this);
-        }
-
-        return $this;
-    }
-
-    public function removeTypeEquipment(TypeEquipments $typeEquipment): self
-    {
-        if ($this->typeEquipments->contains($typeEquipment)) {
-            $this->typeEquipments->removeElement($typeEquipment);
-            // set the owning side to null (unless already changed)
-            if ($typeEquipment->getStates() === $this) {
-                $typeEquipment->setStates(null);
-            }
-        }
+        $this->Equipment = $Equipment;
 
         return $this;
     }

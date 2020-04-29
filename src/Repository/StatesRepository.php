@@ -25,7 +25,7 @@ class StatesRepository extends ServiceEntityRepository
     public function findByProject($projetid)
     {
         return $this->createQueryBuilder('s')
-            ->leftJoin('s.object', 'e')
+            ->leftJoin('s.equipment', 'e')
             ->andWhere('e.project = :val')
             ->setParameter('val', $projetid)
             ->orderBy('s.id', 'ASC')

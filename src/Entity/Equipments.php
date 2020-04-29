@@ -29,18 +29,19 @@ class Equipments
     private $init;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\States", inversedBy="object")
-     */
-    private $state;
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Projects", inversedBy="equipments")
      */
     private $project;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\States", mappedBy="Equipment")
+     */
+    private $states;
+
     public function __construct()
     {
         $this->state = new ArrayCollection();
+        $this->states = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -72,37 +73,6 @@ class Equipments
         return $this;
     }
 
-    /**
-     * @return Collection|States[]
-     */
-    public function getstate(): Collection
-    {
-        return $this->state;
-    }
-
-    public function addObject(States $object): self
-    {
-        if (!$this->state->contains($object)) {
-            $this->state[] = $object;
-            $object->setObject($this);
-        }
-
-        return $this;
-    }
-
-    public function removeObject(States $object): self
-    {
-        if ($this->state->contains($object)) {
-            $this->state->removeElement($object);
-            // set the owning side to null (unless already changed)
-            if ($object->getObject() === $this) {
-                $object->setObject(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function getProject(): ?Projects
     {
         return $this->project;
@@ -118,5 +88,36 @@ class Equipments
     public function __toString(): string
     {
         return $this->name;
+    }
+
+    /**
+     * @return Collection|States[]
+     */
+    public function getStates(): Collection
+    {
+        return $this->states;
+    }
+
+    public function addState(States $state): self
+    {
+        if (!$this->states->contains($state)) {
+            $this->states[] = $state;
+            $state->setEquipment($this);
+        }
+
+        return $this;
+    }
+
+    public function removeState(States $state): self
+    {
+        if ($this->states->contains($state)) {
+            $this->states->removeElement($state);
+            // set the owning side to null (unless already changed)
+            if ($state->getEquipment() === $this) {
+                $state->setEquipment(null);
+            }
+        }
+
+        return $this;
     }
 }

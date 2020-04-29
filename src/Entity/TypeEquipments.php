@@ -28,15 +28,6 @@ class TypeEquipments
      */
     private $description;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\States", inversedBy="typeEquipments")
-     */
-    private $states;
-
-    public function __construct()
-    {
-        $this->states = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
@@ -69,17 +60,5 @@ class TypeEquipments
     public function __toString(): string
     {
         return $this->title;
-    }
-
-    public function getStates(): ?States
-    {
-        return $this->states;
-    }
-
-    public function setStates(?States $states): self
-    {
-        $this->states = $states;
-
-        return $this;
     }
 }
