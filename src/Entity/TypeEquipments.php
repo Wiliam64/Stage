@@ -28,6 +28,16 @@ class TypeEquipments
      */
     private $description;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Equipments", mappedBy="typeEquipment")
+     */
+    private $equipments;
+
+    public function __construct()
+    {
+        $this->equipments = new ArrayCollection();
+    }
+
 
     public function getId(): ?int
     {
@@ -60,5 +70,36 @@ class TypeEquipments
     public function __toString(): string
     {
         return $this->title;
+    }
+
+    /**
+     * @return Collection|Equipments[]
+     */
+    public function getEquipments(): Collection
+    {
+        return $this->equipments;
+    }
+
+    public function addEquipment(Equipments $equipment): self
+    {
+        if (!$this->equipments->contains($equipment)) {
+            $this->equipments[] = $equipment;
+            $equipment->setTypeEquipment($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEquipment(Equipments $equipment): self
+    {
+        if ($this->equipments->contains($equipment)) {
+            $this->equipments->removeElement($equipment);
+            // set the owning side to null (unless already changed)
+            if ($equipment->getTypeEquipment() === $this) {
+                $equipment->setTypeEquipment(null);
+            }
+        }
+
+        return $this;
     }
 }

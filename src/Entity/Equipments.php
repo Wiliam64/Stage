@@ -38,6 +38,11 @@ class Equipments
      */
     private $states;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\TypeEquipments", inversedBy="equipments")
+     */
+    private $typeEquipment;
+
     public function __construct()
     {
         $this->state = new ArrayCollection();
@@ -117,6 +122,18 @@ class Equipments
                 $state->setEquipment(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getTypeEquipment(): ?TypeEquipments
+    {
+        return $this->typeEquipment;
+    }
+
+    public function setTypeEquipment(?TypeEquipments $typeEquipment): self
+    {
+        $this->typeEquipment = $typeEquipment;
 
         return $this;
     }
