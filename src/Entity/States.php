@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\StatesRepository")
@@ -20,6 +21,7 @@ class States
 
     /**
      * @ORM\Column(type="string", length=50)
+     * @Groups("get:read")
      */
     private $name;
 
@@ -30,11 +32,13 @@ class States
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Actions", mappedBy="states")
+     * @Groups("get:read")
      */
     private $actions;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Attributes", mappedBy="states")
+     * @Groups("get:read")
      */
     private $attributes;
 
@@ -47,6 +51,16 @@ class States
      * @ORM\ManyToOne(targetEntity="App\Entity\Equipments", inversedBy="states")
      */
     private $Equipment;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\TypeStates", inversedBy="states")
+     */
+    private $typestate;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $groupe;
 
 
     public function __construct()
@@ -194,4 +208,30 @@ class States
 
         return $this;
     }
+
+    public function getTypestate(): ?TypeStates
+    {
+        return $this->typestate;
+    }
+
+    public function setTypestate(?TypeStates $typestate): self
+    {
+        $this->typestate = $typestate;
+
+        return $this;
+    }
+
+    public function getGroupe(): ?int
+    {
+        return $this->groupe;
+    }
+
+    public function setGroupe(int $groupe): self
+    {
+        $this->groupe = $groupe;
+
+        return $this;
+    }
+
+    
 }

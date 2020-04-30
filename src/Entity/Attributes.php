@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AttributesRepository")
@@ -18,11 +19,13 @@ class Attributes
 
     /**
      * @ORM\Column(type="string", length=50)
+     * @Groups("get:read")
      */
     private $key_attribute;
 
     /**
      * @ORM\Column(type="string", length=50)
+     * @Groups("get:read")
      */
     private $value;
 

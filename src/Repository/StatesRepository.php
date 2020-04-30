@@ -19,13 +19,11 @@ class StatesRepository extends ServiceEntityRepository
         parent::__construct($registry, States::class);
     }
 
-    // /**
-    //  * @return States[] Returns an array of States objects
-    //  */
+    
     public function findByProject($projetid)
     {
         return $this->createQueryBuilder('s')
-            ->leftJoin('s.equipment', 'e')
+            ->leftJoin('s.Equipment', 'e')
             ->andWhere('e.project = :val')
             ->setParameter('val', $projetid)
             ->orderBy('s.id', 'ASC')
@@ -34,15 +32,31 @@ class StatesRepository extends ServiceEntityRepository
         ;
     }
 
-    /*
-    public function findOneBySomeField($value): ?States
+    
+    public function findMaxGroup($projetid)
     {
         return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
+                ->leftJoin('s.Equipment', 'e')
+                ->select('(COALESCE(MAX(s.groupe)) + 1) AS max_groupe')
+                ->andWhere('e.project = :val')
+                ->setParameter('val', $projetid)
+                ->groupBy('e.project')
+                ->getQuery()
+                ->getOneOrNullResult()["max_groupe"];
+    }
+
+    public function findEquipementsByGroup($projetid, $groupe)
+    {
+        return $this->createQueryBuilder('s')
+            ->leftJoin('s.Equipment', 'e')
+            ->andWhere('e.project = :val')
+            ->setParameter('val', $projetid)
+            ->andWhere('s.groupe = :grp')
+            ->setParameter('grp', $groupe)
+            ->orderBy('s.id', 'ASC')
             ->getQuery()
-            ->getOneOrNullResult()
+            ->getResult()
         ;
     }
-    */
+    
 }

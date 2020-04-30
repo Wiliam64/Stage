@@ -19,9 +19,7 @@ class EquipmentsRepository extends ServiceEntityRepository
         parent::__construct($registry, Equipments::class);
     }
 
-    // /**
-    //  * @return Equipments[] Returns an array of Equipments objects
-    //  */
+
     public function findByProject($projetid)
     {
         return $this->createQueryBuilder('e')
@@ -33,15 +31,17 @@ class EquipmentsRepository extends ServiceEntityRepository
         ;
     }
 
-    /*
-    public function findOneBySomeField($value): ?Equipments
+    public function findByGroup($projetid, $groupe)
     {
         return $this->createQueryBuilder('e')
-            ->andWhere('e.exampleField = :val')
-            ->setParameter('val', $value)
+            ->leftJoin('e.states', 's')
+            ->andWhere('e.project = :val')
+            ->setParameter('val', $projetid)
+            ->andWhere('s.groupe = :grp')
+            ->setParameter('grp', $groupe)
+            ->orderBy('s.id', 'ASC')
             ->getQuery()
-            ->getOneOrNullResult()
+            ->getResult()
         ;
     }
-    */
 }

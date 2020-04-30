@@ -29,7 +29,7 @@ class TypeEquipments
     private $description;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Equipments", mappedBy="typeEquipment")
+     * @ORM\OneToMany(targetEntity="App\Entity\Equipments", mappedBy="typeequipment")
      */
     private $equipments;
 
@@ -84,7 +84,7 @@ class TypeEquipments
     {
         if (!$this->equipments->contains($equipment)) {
             $this->equipments[] = $equipment;
-            $equipment->setTypeEquipment($this);
+            $equipment->setTypeequipment($this);
         }
 
         return $this;
@@ -95,8 +95,8 @@ class TypeEquipments
         if ($this->equipments->contains($equipment)) {
             $this->equipments->removeElement($equipment);
             // set the owning side to null (unless already changed)
-            if ($equipment->getTypeEquipment() === $this) {
-                $equipment->setTypeEquipment(null);
+            if ($equipment->getTypeequipment() === $this) {
+                $equipment->setTypeequipment(null);
             }
         }
 

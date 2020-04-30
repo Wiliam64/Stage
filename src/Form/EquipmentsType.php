@@ -14,8 +14,7 @@ class EquipmentsType extends AbstractType
         $builder
             ->add('name')
             ->add('init')
-            ->add('state')
-            ->add('project')
+            ->add('typeequipment')
         ;
     }
 

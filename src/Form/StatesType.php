@@ -13,8 +13,8 @@ class StatesType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('description')
-            ->add('typeEquipments')
+            ->add('description')            
+            ->add('typestate')
         ;
     }
 

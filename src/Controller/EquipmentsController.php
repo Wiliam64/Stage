@@ -4,16 +4,15 @@ namespace App\Controller;
 
 use App\Entity\Equipments;
 use App\Form\EquipmentsType;
+use App\Repository\ProjectsRepository;
 use App\Repository\EquipmentsRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * @Route("/equipments")
- * @IsGranted("ROLE_ADMIN")
  */
 class EquipmentsController extends AbstractController
 {
@@ -28,11 +27,13 @@ class EquipmentsController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="equipments_new", methods={"GET","POST"})
+     * @Route("/new/{projetid}", name="equipments_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new($projetid, Request $request, ProjectsRepository $projectsRepository): Response
     {
+        $projet = $projectsRepository->find($projetid);
         $equipment = new Equipments();
+        $equipment->setProject($projet);
         $form = $this->createForm(EquipmentsType::class, $equipment);
         $form->handleRequest($request);
 

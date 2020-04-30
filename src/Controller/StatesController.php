@@ -5,65 +5,74 @@ namespace App\Controller;
 use App\Entity\States;
 use App\Form\StatesType;
 use App\Repository\StatesRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Repository\ProjectsRepository;
+use App\Repository\EquipmentsRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * @Route("/states")
- * @IsGranted("ROLE_ADMIN")
  */
 class StatesController extends AbstractController
 {
+    
     /**
-     * @Route("/", name="states_index", methods={"GET"})
+     * @Route("/new/{projetid}", name="states_new", methods={"GET","POST"})
      */
-    public function index(StatesRepository $statesRepository): Response
+    public function new($projetid, Request $request, ProjectsRepository $projectsRepository, 
+                        EquipmentsRepository $equipmentsRepository, StatesRepository $StatesRepository): Response
     {
-        return $this->render('states/index.html.twig', [
-            'states' => $statesRepository->findAll(),
-        ]);
-    }
-
-    /**
-     * @Route("/new", name="states_new", methods={"GET","POST"})
-     */
-    public function new(Request $request): Response
-    {
+        $projet = $projectsRepository->find($projetid);
         $state = new States();
         $form = $this->createForm(StatesType::class, $state);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($state);
-            $entityManager->flush();
 
-            return $this->redirectToRoute('states_index');
+            //enregistre un status pour chaque equipement
+            $equipments = $equipmentsRepository->findByProject($projet->getId());
+            $groupe = $StatesRepository->findMaxGroup($projetid);
+
+            $entityManager = $this->getDoctrine()->getManager();
+            foreach($equipments as $equipment) {
+
+                $stateEq = new States();
+                $stateEq->setName( $state->getName() );
+                $stateEq->setDescription( $state->getDescription() );
+                $stateEq->setTypestate( $state->getTypestate() );
+                $stateEq->setEquipment( $equipment );
+                $stateEq->setGroupe( $groupe );
+                $entityManager->persist($stateEq);
+                $entityManager->flush();
+            }
+
+            return $this->redirectToRoute('projects_show', ["id" => $projetid]);
         }
 
         return $this->render('states/new.html.twig', [
             'state' => $state,
             'form' => $form->createView(),
+            'projet' =>  $projectsRepository->find($projetid),
         ]);
     }
 
     /**
-     * @Route("/{id}", name="states_show", methods={"GET"})
+     * @Route("/{id}/{projetid}", name="states_show", methods={"GET"})
      */
-    public function show(States $state): Response
+    public function show($projetid, States $state, ProjectsRepository $projectsRepository): Response
     {
         return $this->render('states/show.html.twig', [
             'state' => $state,
+            'projet' => $projectsRepository->find($projetid),
         ]);
     }
 
     /**
-     * @Route("/{id}/edit", name="states_edit", methods={"GET","POST"})
+     * @Route("/{id}/edit/{projetid}", name="states_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, States $state): Response
+    public function edit($projetid, Request $request, States $state, ProjectsRepository $projectsRepository): Response
     {
         $form = $this->createForm(StatesType::class, $state);
         $form->handleRequest($request);
@@ -71,19 +80,20 @@ class StatesController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('states_index');
+            return $this->redirectToRoute('projects_show', ["id" => $projetid]);
         }
 
         return $this->render('states/edit.html.twig', [
             'state' => $state,
             'form' => $form->createView(),
+            'projet' => $projectsRepository->find($projetid),
         ]);
     }
 
     /**
-     * @Route("/{id}", name="states_delete", methods={"DELETE"})
+     * @Route("/{id}/{projetid}", name="states_delete", methods={"DELETE"})
      */
-    public function delete(Request $request, States $state): Response
+    public function delete($projetid, Request $request, States $state): Response
     {
         if ($this->isCsrfTokenValid('delete'.$state->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
@@ -91,6 +101,16 @@ class StatesController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('states_index');
+        return $this->redirectToRoute('projects_show', ["id" => $projetid]);
+    }
+
+    /**
+     * @Route("/exportjson/{id}/{projetid}", name="export_json", methods={"GET", "POST"})
+     */
+    public function exportJson($projetid, States $state, EquipmentsRepository $equipmentsRepository)
+    {
+        $equipements = $equipmentsRepository->findByGroup($projetid, $state->getGroupe());
+       
+        return $this->json($equipements,200,[],['groups'=>'get:read']);
     }
 }
